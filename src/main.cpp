@@ -102,6 +102,7 @@ ProgramState *programState;
 void DrawImGui(ProgramState *programState);
 
 int main() {
+    std::cout << "hello\n";
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
