@@ -6,11 +6,11 @@ libs/imgui/CMakeFiles/imgui.dir/src/imgui.cpp.o
  ../libs/imgui/include/imgui.h
  ../libs/imgui/include/imgui_internal.h
  ../libs/imgui/include/imstb_textedit.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui.cpp
 libs/imgui/CMakeFiles/imgui.dir/src/imgui_demo.cpp.o
  ../libs/imgui/include/imconfig.h
  ../libs/imgui/include/imgui.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui_demo.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui_demo.cpp
 libs/imgui/CMakeFiles/imgui.dir/src/imgui_draw.cpp.o
  ../libs/imgui/include/imconfig.h
  ../libs/imgui/include/imgui.h
@@ -18,28 +18,28 @@ libs/imgui/CMakeFiles/imgui.dir/src/imgui_draw.cpp.o
  ../libs/imgui/include/imstb_rectpack.h
  ../libs/imgui/include/imstb_textedit.h
  ../libs/imgui/include/imstb_truetype.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui_draw.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui_draw.cpp
 libs/imgui/CMakeFiles/imgui.dir/src/imgui_impl_glfw.cpp.o
  ../libs/imgui/include/imconfig.h
  ../libs/imgui/include/imgui.h
  ../libs/imgui/include/imgui_impl_glfw.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui_impl_glfw.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui_impl_glfw.cpp
 libs/imgui/CMakeFiles/imgui.dir/src/imgui_impl_opengl3.cpp.o
  ../libs/glad/include/KHR/khrplatform.h
  ../libs/glad/include/glad/glad.h
  ../libs/imgui/include/imconfig.h
  ../libs/imgui/include/imgui.h
  ../libs/imgui/include/imgui_impl_opengl3.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui_impl_opengl3.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui_impl_opengl3.cpp
 libs/imgui/CMakeFiles/imgui.dir/src/imgui_tables.cpp.o
  ../libs/imgui/include/imconfig.h
  ../libs/imgui/include/imgui.h
  ../libs/imgui/include/imgui_internal.h
  ../libs/imgui/include/imstb_textedit.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui_tables.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui_tables.cpp
 libs/imgui/CMakeFiles/imgui.dir/src/imgui_widgets.cpp.o
  ../libs/imgui/include/imconfig.h
  ../libs/imgui/include/imgui.h
  ../libs/imgui/include/imgui_internal.h
  ../libs/imgui/include/imstb_textedit.h
- /home/lucija/Documents/grafika/libs/imgui/src/imgui_widgets.cpp
+ /home/marija/Desktop/projekat/grafika/libs/imgui/src/imgui_widgets.cpp
