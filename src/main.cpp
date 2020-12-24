@@ -172,10 +172,10 @@ int main() {
     //TODO ucitati sve modele i pozicionirati ih ispravno
     // load models
     // -----------
-    Model ourModel("resources/objects/backpack/backpack.obj");
-    //Model ourModel("resources/objects/backpack/GreenChair_01.fbx");
-    Model ourModel2("resources/objects/cyborg/cyborg.obj");
-    ourModel.SetShaderTextureNamePrefix("material.");
+
+    Model ourModelLazyBag("resources/objects/lazybag/10216_Bean_Bag_Chair_v2_max2008_it2.obj");
+    Model ourModelLapTop("resources/objects/laptop/Laptop_High-Polay_HP_BI_2_obj.obj");
+    ourModelLazyBag.SetShaderTextureNamePrefix("material.");
 
 
     //dodala:
@@ -185,12 +185,9 @@ int main() {
 
     // build and compile shaders
     // -------------------------
-    //Shader shader("resources/shaders/6.1.cubemaps.vs", "resources/shaders/6.1.cubemaps.fs");
+
     Shader skyboxShader("resources/shaders/6.1.skybox.vs", "resources/shaders/6.1.skybox.fs");
-
     Shader transpShader("resources/shaders/transparentobj.vs", "resources/shaders/transparentobj.fs");
-
-
 
     // transparent background object:
     float transparentVertices[] = {
@@ -276,18 +273,14 @@ int main() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    //stbi_set_flip_vertically_on_load(false);
+    // load textures
+    // -------------
+    stbi_set_flip_vertically_on_load(true);
     unsigned int transparentTexture = loadTexture(FileSystem::getPath("resources/textures/dollars.png").c_str());
-    //stbi_set_flip_vertically_on_load(true);
-
-
-    glm::vec3 transpPos = glm::vec3(-1.5f, -1.5f, -0.48f);
+    stbi_set_flip_vertically_on_load(false);
     transpShader.use();
     transpShader.setInt("texture1", 0);
 
-    // load textures
-    // -------------
-    //unsigned int cubeTexture = loadTexture(FileSystem::getPath("resources/textures/container.jpg").c_str());
 
     vector<std::string> faces
             {
@@ -298,19 +291,84 @@ int main() {
                     FileSystem::getPath("resources/textures/skybox/novo/pz.jpg"),
                     FileSystem::getPath("resources/textures/skybox/novo/nz.jpg")
             };
+
     unsigned int cubemapTexture = loadCubemap(faces);
 
     // shader configuration
     // --------------------
-    //shader.use();
-    //shader.setInt("texture1", 0);
 
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
-    //do ovde
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+    // novo odavde:
+
+    // set up vertex data (and buffer(s)) and configure vertex attributes
+    // ------------------------------------------------------------------
+    float vertices[] = {
+            // positions          // colors           // texture coords
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+    };
+    unsigned int indices[] = {
+            0, 1, 3, // first triangle
+            1, 2, 3 // second triangle
+    };
+    unsigned int slikaVBO, slikaVAO, slikaEBO;
+    glGenVertexArrays(1, &slikaVAO);
+    glGenBuffers(1, &slikaVBO);
+    glGenBuffers(1, &slikaEBO);
+
+    glBindVertexArray(slikaVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, slikaVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, slikaEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+
+    // load and create a texture
+    // -------------------------
+    unsigned int texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // load image, create texture and generate mipmaps
+    int width, height, nrChannels;
+    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
+    unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/tmp_slika.png").c_str(), &width, &height, &nrChannels, 0);
+    if (data)
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
+    else
+    {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+    //do ovde
+
 
     // render loop
     // -----------
@@ -374,37 +432,60 @@ int main() {
         ourShader.setMat4("view", view);
 
         // render the loaded model
+
+        //LAZYBAG
+        //TODO pozicionirati
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model,
-                               programState->backpackPosition); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(programState->backpackScale));    // it's a bit too big for our scene, so scale it down
+        model = glm::translate(model,glm::vec3(-2.0f,-10.0f,25.0f)); // translate it down so it's at the center of the scene
+        model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
+        model = glm::rotate(model,glm::radians(65.0f),glm::vec3(0,0,1.0));
+        model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
+        model = glm::scale(model, glm::vec3(0.07f,0.07f,0.07f));    // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
-        ourModel.Draw(ourShader);
+        ourModelLazyBag.Draw(ourShader);
 
-
+        //LAPTOP, dobro pozicioniran
         model = glm::mat4(1.0f);
-        model = glm::translate(model,glm::vec3(2.0f,0.0f,2.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.5f));    // it's a bit too big for our scene, so scale it down
+        model = glm::translate(model,glm::vec3(13.0f,-5.0f,16.0f)); // translate it down so it's at the center of the scene
+        model = glm::scale(model, glm::vec3(0.6f));    // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
-        ourModel2.Draw(ourShader);
+        ourModelLapTop.Draw(ourShader);
+
 
         // transparent object
         transpShader.use();
         projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         view = programState->camera.GetViewMatrix();
         model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(-1.5f, -3.0f, -0.5f));
+
+        transpShader.setMat4("model", model);
         transpShader.setMat4("projection", projection);
         transpShader.setMat4("view", view);
+
         glBindVertexArray(transparentVAO);
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, transparentTexture);
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, transpPos);
-        transpShader.setMat4("model", model);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        if (programState->ImGuiEnabled)
-            DrawImGui(programState);
+        //novo odavde:
+        // bind Texture
+        glBindTexture(GL_TEXTURE_2D, texture);
+        // render container
+        transpShader.use();
+        projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        view = programState->camera.GetViewMatrix();
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(7.5f, 2.0f, 4.5f));
+        model = glm::rotate(model,glm::radians(90.0f),glm::vec3(0.0,1.0,0.0));
+        model = glm::scale(model,glm::vec3(1.5f));
+
+        transpShader.setMat4("model", model);
+        transpShader.setMat4("projection", projection);
+        transpShader.setMat4("view", view);
+        glBindVertexArray(slikaVAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        //novo do ovde
 
 
         //dodala:
@@ -425,6 +506,9 @@ int main() {
 
         //do ovde
 
+        if (programState->ImGuiEnabled)
+            DrawImGui(programState);
+
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
@@ -438,6 +522,11 @@ int main() {
     ImGui::DestroyContext();
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+
+    glDeleteVertexArrays(1, &slikaVAO);
+    glDeleteBuffers(1, &slikaVBO);
+    glDeleteBuffers(1, &slikaEBO);
+
     glfwTerminate();
     return 0;
 }
