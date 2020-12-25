@@ -175,8 +175,8 @@ int main() {
 
     Model ourModelLazyBag("resources/objects/lazybag/10216_Bean_Bag_Chair_v2_max2008_it2.obj");
     Model ourModelLapTop("resources/objects/laptop/Laptop_High-Polay_HP_BI_2_obj.obj");
+    Model ourModelKaktus("resources/objects/kaktus/kwiatek.obj");
     ourModelLazyBag.SetShaderTextureNamePrefix("material.");
-
 
     //dodala:
     // configure global opengl state
@@ -261,11 +261,24 @@ int main() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
     // dollar stash vao
-    unsigned int transparentVAO, transparentVBO;
-    glGenVertexArrays(1, &transparentVAO);
-    glGenBuffers(1, &transparentVBO);
-    glBindVertexArray(transparentVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, transparentVBO);
+    unsigned int transparentDollarVAO, transparentDollarVBO;
+    glGenVertexArrays(1, &transparentDollarVAO);
+    glGenBuffers(1, &transparentDollarVBO);
+    glBindVertexArray(transparentDollarVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, transparentDollarVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(transparentVertices), transparentVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glBindVertexArray(0);
+
+    //DIAMOND vao
+    unsigned int transparentDiamondVAO, transparentDiamondVBO;
+    glGenVertexArrays(1, &transparentDiamondVAO);
+    glGenBuffers(1, &transparentDiamondVBO);
+    glBindVertexArray(transparentDiamondVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, transparentDiamondVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(transparentVertices), transparentVertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
@@ -276,20 +289,22 @@ int main() {
     // load textures
     // -------------
     stbi_set_flip_vertically_on_load(true);
-    unsigned int transparentTexture = loadTexture(FileSystem::getPath("resources/textures/dollars.png").c_str());
+    unsigned int transparentDollarTexture = loadTexture(FileSystem::getPath("resources/textures/dollars.png").c_str());
+    unsigned int transparentDiamondTexture = loadTexture(FileSystem::getPath("resources/textures/diamond.png").c_str());
     stbi_set_flip_vertically_on_load(false);
+
     transpShader.use();
     transpShader.setInt("texture1", 0);
 
 
     vector<std::string> faces
             {
-                    FileSystem::getPath("resources/textures/skybox/novo/px.jpg"),
-                    FileSystem::getPath("resources/textures/skybox/novo/nx.jpg"),
-                    FileSystem::getPath("resources/textures/skybox/novo/py.jpg"),
-                    FileSystem::getPath("resources/textures/skybox/novo/ny.jpg"),
-                    FileSystem::getPath("resources/textures/skybox/novo/pz.jpg"),
-                    FileSystem::getPath("resources/textures/skybox/novo/nz.jpg")
+                    FileSystem::getPath("resources/textures/skybox/px.jpg"),
+                    FileSystem::getPath("resources/textures/skybox/nx.jpg"),
+                    FileSystem::getPath("resources/textures/skybox/py.jpg"),
+                    FileSystem::getPath("resources/textures/skybox/ny.jpg"),
+                    FileSystem::getPath("resources/textures/skybox/pz.jpg"),
+                    FileSystem::getPath("resources/textures/skybox/nz.jpg")
             };
 
     unsigned int cubemapTexture = loadCubemap(faces);
@@ -315,19 +330,17 @@ int main() {
             -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
     };
     unsigned int indices[] = {
-            0, 1, 3, // first triangle
-            1, 2, 3 // second triangle
+            0,1,3,
+            1,2,3 // first triangle
+             // second triangle
     };
     unsigned int slikaVBO, slikaVAO, slikaEBO;
     glGenVertexArrays(1, &slikaVAO);
     glGenBuffers(1, &slikaVBO);
     glGenBuffers(1, &slikaEBO);
-
     glBindVertexArray(slikaVAO);
-
     glBindBuffer(GL_ARRAY_BUFFER, slikaVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, slikaEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
@@ -340,7 +353,6 @@ int main() {
     // texture coord attribute
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
-
 
     // load and create a texture
     // -------------------------
@@ -434,9 +446,8 @@ int main() {
         // render the loaded model
 
         //LAZYBAG
-        //TODO pozicionirati
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model,glm::vec3(-2.0f,-10.0f,25.0f)); // translate it down so it's at the center of the scene
+        glm::mat4 model = glm::mat4(1.0f); //staviti z na 30.0f kada se pomeri lazybag, inace na 25.0f
+        model = glm::translate(model,glm::vec3(-2.0f,-10.0f,30.0f)); // translate it down so it's at the center of the scene
         model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
         model = glm::rotate(model,glm::radians(65.0f),glm::vec3(0,0,1.0));
         model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
@@ -451,24 +462,53 @@ int main() {
         ourShader.setMat4("model", model);
         ourModelLapTop.Draw(ourShader);
 
+        //NOVOOOOO DANAS:
+        //KAKTUS
+        model = glm::mat4(1.0f); //staviti x na 4.0f kada se pomeri saksija, inace na 8.0f
+        model = glm::translate(model,glm::vec3(4.0f,-5.5f,3.5f)); // translate it down so it's at the center of the scene
+        //model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
+        model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0,0.0));
+        //model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
+        model = glm::scale(model, glm::vec3(0.065f,0.065f,0.065f));    // it's a bit too big for our scene, so scale it down
+        ourShader.setMat4("model", model);
+        ourModelKaktus.Draw(ourShader);
 
-        // transparent object
+        // transparent objects
+        // DOLLAR object
         transpShader.use();
         projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         view = programState->camera.GetViewMatrix();
         model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-1.5f, -3.0f, -0.5f));
+        model = glm::translate(model, glm::vec3(-2.0f, -10.0f, 25.0f));
+        model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 
         transpShader.setMat4("model", model);
         transpShader.setMat4("projection", projection);
         transpShader.setMat4("view", view);
 
-        glBindVertexArray(transparentVAO);
+        glBindVertexArray(transparentDollarVAO);
         glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, transparentTexture);
+        glBindTexture(GL_TEXTURE_2D, transparentDollarTexture);
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
-        //novo odavde:
+        //DIAMOND object
+        transpShader.use();
+        projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        view = programState->camera.GetViewMatrix();
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(10.0f, -5.0f, 3.5f));
+        model = glm::rotate(model,glm::radians(98.0f),glm::vec3(0.0,1.0,0.0));
+
+        transpShader.setMat4("model", model);
+        transpShader.setMat4("projection", projection);
+        transpShader.setMat4("view", view);
+
+        glBindVertexArray(transparentDiamondVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, transparentDiamondTexture);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        //novo odavde, za sliku na zidu:
         // bind Texture
         glBindTexture(GL_TEXTURE_2D, texture);
         // render container
@@ -545,6 +585,9 @@ void processInput(GLFWwindow *window) {
         programState->camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         programState->camera.ProcessKeyboard(RIGHT, deltaTime);
+
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
+        programState->camera.Position = glm::vec3(-2.32,0.54,5.87);
 
     //TODO mouse click feature
 
