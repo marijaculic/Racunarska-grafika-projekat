@@ -16,7 +16,7 @@
 
 #include <iostream>
 
-#define TIMER_START 60.0
+#define TIMER_START 15.0
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
@@ -57,12 +57,19 @@ struct PointLight {
     float quadratic;
 };
 
+struct MovingObject{
+    int kaktus = -1;
+    int laptop = -1;
+    int lazybag = -1;
+};
+
 struct ProgramState {
     glm::vec3 clearColor = glm::vec3(0);
     bool ImGuiEnabled = false;
     Camera camera;
     bool CameraMouseMovementUpdateEnabled = true;
     bool gameStart = false;
+    bool gameSuccess = false;
     double startTime;
     bool diamondColected = false;
     bool dollarCollected = false;
@@ -108,6 +115,7 @@ void ProgramState::LoadFromFile(std::string filename) {
 }
 
 ProgramState *programState;
+MovingObject movingObject;
 
 void DrawImGui(ProgramState *programState);
 
@@ -451,31 +459,32 @@ int main() {
 
         // render the loaded model
 
+        /// pomerila lazybag da bude blize kameri, zbog osvetljenja
         //LAZYBAG
-        glm::mat4 model = glm::mat4(1.0f); //staviti z na 30.0f kada se pomeri lazybag, inace na 25.0f
-        model = glm::translate(model,glm::vec3(-2.0f,-10.0f,30.0f)); // translate it down so it's at the center of the scene
+        glm::mat4 model = glm::mat4(1.0f); //staviti z na 16.5f kada se pomeri lazybag, inace na 15.0f
+        model = glm::translate(model,glm::vec3(-2.5f,-3.0f,15.5f) + (float)movingObject.lazybag * glm::vec3(0.0f, 0.0f, 1.5f));
         model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
         model = glm::rotate(model,glm::radians(65.0f),glm::vec3(0,0,1.0));
         model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
-        model = glm::scale(model, glm::vec3(0.07f,0.07f,0.07f));    // it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(0.03f,0.03f,0.03f));    // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
         ourModelLazyBag.Draw(ourShader);
 
         //LAPTOP, dobro pozicioniran
         model = glm::mat4(1.0f);
-        model = glm::translate(model,glm::vec3(13.0f,-5.0f,16.0f)); // translate it down so it's at the center of the scene
-        model = glm::scale(model, glm::vec3(0.6f));    // it's a bit too big for our scene, so scale it down
+        model = glm::translate(model,glm::vec3(13.0f, -5.0f, 18.0f) + (float)movingObject.laptop * glm::vec3(0.0f, 0.0f, 2.0f));
+        model = glm::scale(model, glm::vec3(0.6f));
         ourShader.setMat4("model", model);
         ourModelLapTop.Draw(ourShader);
 
         //NOVOOOOO DANAS:
         //KAKTUS
         model = glm::mat4(1.0f); //staviti x na 4.0f kada se pomeri saksija, inace na 8.0f
-        model = glm::translate(model,glm::vec3(4.0f,-5.5f,3.5f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(6.0f,-5.5f,3.5f) + (float)movingObject.kaktus * glm::vec3(-2.0f, 0.0f, 0.0f));
         //model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
         model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0,0.0));
         //model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
-        model = glm::scale(model, glm::vec3(0.065f,0.065f,0.065f));    // it's a bit too big for our scene, so scale it down
+        model = glm::scale(model, glm::vec3(0.065f,0.065f,0.065f));
         ourShader.setMat4("model", model);
         ourModelKaktus.Draw(ourShader);
 
@@ -487,7 +496,7 @@ int main() {
                                           (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
             view = programState->camera.GetViewMatrix();
             model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(-2.0f, -10.0f, 25.0f));
+            model = glm::translate(model, glm::vec3(-3.0f, -10.0f, 27.0f));
             model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 
             transpShader.setMat4("model", model);
@@ -601,10 +610,6 @@ void processInput(GLFWwindow *window) {
 
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
         programState->camera.Position = glm::vec3(-2.32,0.54,5.87);
-
-    //TODO mouse click feature
-
-
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
@@ -647,30 +652,40 @@ void DrawImGui(ProgramState *programState) {
 
     {
         double time = TIMER_START;
-        if(programState->gameStart) {
+        if(programState->gameStart && !programState->diamondColected && !programState->dollarCollected) {
             time = max(TIMER_START - glfwGetTime() + programState->startTime, 0.0);
         }
         ImGui::Begin("Money Heist");
         ImGui::Text("timer: %f sec", time);
 
-        /// Ovaj deo nam treba za implementaciju mouse click na objekat
-        const Camera& c = programState->camera;
-        ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
-        ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
-        ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
+        /// Ovaj deo nam treba za implementaciju pomeranja objekata
+//        const Camera& c = programState->camera;
+//        ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
+//        ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
+//        ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
 
 
-        if(!programState->gameStart ){
+        if(!programState->gameStart){
             ImGui::Text("Nalazis se u hotelskoj sobi koju zelis da opljackas,\nali ono sto nisi znao je da je ona obezbdjena alarmom\n"
                         "Imas tacno 60 sekundi da pronadjes ono zbog cega si ovde\n\n\n"
-                        "Da zapocnes igru pritisni SPACE\n");
+                        "Da zapocnes igru pritisni S\n");
         }
         else if(time == 0){
             programState->CameraMouseMovementUpdateEnabled = false;
             ImGui::Text("Kraj igre, isteklo vreme\n\n\n"
                         "Za izlaz pritisni ESC\n");
         } else{
-            ImGui::Text("Klikom misa pomeraj objekte\ni pozuri, tajmer vec odbrojava\n");
+            ImGui::Text("Klikni SPACE da pomeris osvetljeni objekat,\n"
+                        "da sakupis blago klikni ENTER \ni pozuri, tajmer vec odbrojava\n");
+            if(programState->diamondColected && !programState->dollarCollected){
+                ImGui::Text("Bravo, pronasao si dijamant\n");
+            }
+            if(programState->dollarCollected && !programState->diamondColected) {
+                ImGui::Text("Bravo, pronasao si dolare\n");
+            }
+            if(programState->diamondColected && programState->dollarCollected){
+                ImGui::Text("Misija uspesna!\n Sve si pronasao na vreme\n");
+            }
         }
 
         ImGui::End();
@@ -681,14 +696,50 @@ void DrawImGui(ProgramState *programState) {
 }
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
+    if (key == GLFW_KEY_S && action == GLFW_PRESS) {
         if (!programState->gameStart) {
             programState->startTime = glfwGetTime();
         }
         programState->gameStart = true;
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
+
+    if(key == GLFW_KEY_SPACE && action == GLFW_PRESS && programState->gameStart) {
+        double xpos = programState->camera.Front.x;
+        double ypos = programState->camera.Front.y;
+        double zpos = programState->camera.Front.z;
+
+        // kaktus
+        if ((xpos - 0.93) * (xpos - 0.93) + (ypos + 0.33) * (ypos + 0.33) + (zpos + 0.13) * (zpos + 0.13) < 0.1 && movingObject.kaktus == -1)
+            movingObject.kaktus = 1;
+        else if (movingObject.kaktus == 1)
+            movingObject.kaktus = -1;
+        // lazybag
+        if ((xpos + 0.01) * (xpos + 0.01) + (ypos + 0.33) * (ypos + 0.33) + (zpos - 0.94) * (zpos - 0.94) < 0.1 && movingObject.lazybag == -1)
+            movingObject.lazybag = 1;
+        else if (movingObject.lazybag == 1)
+            movingObject.lazybag = -1;
+        // laptop
+        if ((xpos - 0.79) * (xpos - 0.79) + (ypos + 0.18) * (ypos + 0.18) + (zpos - 0.58) * (zpos - 0.58) < 0.1 && movingObject.laptop == -1)
+            movingObject.laptop = 1;
+        else if (movingObject.laptop == 1)
+            movingObject.laptop = -1;
+    }
+
+    if(key == GLFW_KEY_ENTER && action == GLFW_PRESS){
+        if(movingObject.kaktus == 1){
+            programState->diamondColected = true;
+        }
+        else if(movingObject.lazybag == 1){
+            programState->dollarCollected = true;
+        }
+
+        if(programState->diamondColected && programState->dollarCollected){
+            programState->CameraMouseMovementUpdateEnabled = false;
+        }
+    }
 }
+
 
 unsigned int loadCubemap(vector<std::string> faces)
 {
