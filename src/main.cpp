@@ -16,6 +16,8 @@
 
 #include <iostream>
 
+#define TIMER_START 60.0
+
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
 void mouse_callback(GLFWwindow *window, double xpos, double ypos);
@@ -60,6 +62,10 @@ struct ProgramState {
     bool ImGuiEnabled = false;
     Camera camera;
     bool CameraMouseMovementUpdateEnabled = true;
+    bool gameStart = false;
+    double startTime;
+    bool diamondColected = false;
+    bool dollarCollected = false;
     glm::vec3 backpackPosition = glm::vec3(0.0f);
     float backpackScale = 1.0f;
     PointLight pointLight;
@@ -475,39 +481,43 @@ int main() {
 
         // transparent objects
         // DOLLAR object
-        transpShader.use();
-        projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = programState->camera.GetViewMatrix();
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(-2.0f, -10.0f, 25.0f));
-        model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+        if(!programState->dollarCollected){
+            transpShader.use();
+            projection = glm::perspective(glm::radians(programState->camera.Zoom),
+                                          (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
+            view = programState->camera.GetViewMatrix();
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(-2.0f, -10.0f, 25.0f));
+            model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 
-        transpShader.setMat4("model", model);
-        transpShader.setMat4("projection", projection);
-        transpShader.setMat4("view", view);
+            transpShader.setMat4("model", model);
+            transpShader.setMat4("projection", projection);
+            transpShader.setMat4("view", view);
 
-        glBindVertexArray(transparentDollarVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, transparentDollarTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
+            glBindVertexArray(transparentDollarVAO);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, transparentDollarTexture);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
         //DIAMOND object
-        transpShader.use();
-        projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        view = programState->camera.GetViewMatrix();
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(10.0f, -5.0f, 3.5f));
-        model = glm::rotate(model,glm::radians(98.0f),glm::vec3(0.0,1.0,0.0));
+        if(!programState->diamondColected){
+            transpShader.use();
+            projection = glm::perspective(glm::radians(programState->camera.Zoom),
+                                          (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
+            view = programState->camera.GetViewMatrix();
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(10.0f, -5.0f, 3.5f));
+            model = glm::rotate(model, glm::radians(98.0f), glm::vec3(0.0, 1.0, 0.0));
 
-        transpShader.setMat4("model", model);
-        transpShader.setMat4("projection", projection);
-        transpShader.setMat4("view", view);
+            transpShader.setMat4("model", model);
+            transpShader.setMat4("projection", projection);
+            transpShader.setMat4("view", view);
 
-        glBindVertexArray(transparentDiamondVAO);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, transparentDiamondTexture);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-
+            glBindVertexArray(transparentDiamondVAO);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, transparentDiamondTexture);
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
         //novo odavde, za sliku na zidu:
         // bind Texture
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -577,6 +587,8 @@ void processInput(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
 
+    /// ovaj deo nece biti dostupan za vreme igre, samo kao pomoc u izradi
+    /*
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         programState->camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -585,6 +597,7 @@ void processInput(GLFWwindow *window) {
         programState->camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         programState->camera.ProcessKeyboard(RIGHT, deltaTime);
+    */
 
     if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
         programState->camera.Position = glm::vec3(-2.32,0.54,5.87);
@@ -627,35 +640,39 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
     programState->camera.ProcessMouseScroll(yoffset);
 }
 
-//TODO: ispraviti iscrtavanje ImGui-a
 void DrawImGui(ProgramState *programState) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-
     {
-        static float f = 0.0f;
-        ImGui::Begin("Hello window");
-        ImGui::Text("Hello text");
-        ImGui::SliderFloat("Float slider", &f, 0.0, 1.0);
-        ImGui::ColorEdit3("Background color", (float *) &programState->clearColor);
-        ImGui::DragFloat3("Backpack position", (float*)&programState->backpackPosition);
-        ImGui::DragFloat("Backpack scale", &programState->backpackScale, 0.05, 0.1, 4.0);
+        double time = TIMER_START;
+        if(programState->gameStart) {
+            time = max(TIMER_START - glfwGetTime() + programState->startTime, 0.0);
+        }
+        ImGui::Begin("Money Heist");
+        ImGui::Text("timer: %f sec", time);
 
-        ImGui::DragFloat("pointLight.constant", &programState->pointLight.constant, 0.05, 0.0, 1.0);
-        ImGui::DragFloat("pointLight.linear", &programState->pointLight.linear, 0.05, 0.0, 1.0);
-        ImGui::DragFloat("pointLight.quadratic", &programState->pointLight.quadratic, 0.05, 0.0, 1.0);
-        ImGui::End();
-    }
-
-    {
-        ImGui::Begin("Camera info");
+        /// Ovaj deo nam treba za implementaciju mouse click na objekat
         const Camera& c = programState->camera;
         ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
         ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
         ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
-        ImGui::Checkbox("Camera mouse update", &programState->CameraMouseMovementUpdateEnabled);
+
+
+        if(!programState->gameStart ){
+            ImGui::Text("Nalazis se u hotelskoj sobi koju zelis da opljackas,\nali ono sto nisi znao je da je ona obezbdjena alarmom\n"
+                        "Imas tacno 60 sekundi da pronadjes ono zbog cega si ovde\n\n\n"
+                        "Da zapocnes igru pritisni SPACE\n");
+        }
+        else if(time == 0){
+            programState->CameraMouseMovementUpdateEnabled = false;
+            ImGui::Text("Kraj igre, isteklo vreme\n\n\n"
+                        "Za izlaz pritisni ESC\n");
+        } else{
+            ImGui::Text("Klikom misa pomeraj objekte\ni pozuri, tajmer vec odbrojava\n");
+        }
+
         ImGui::End();
     }
 
@@ -665,13 +682,11 @@ void DrawImGui(ProgramState *programState) {
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS) {
-        programState->ImGuiEnabled = !programState->ImGuiEnabled;
-        if (programState->ImGuiEnabled) {
-            //programState->CameraMouseMovementUpdateEnabled = false;
-            //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        } else {
-            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        if (!programState->gameStart) {
+            programState->startTime = glfwGetTime();
         }
+        programState->gameStart = true;
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     }
 }
 
