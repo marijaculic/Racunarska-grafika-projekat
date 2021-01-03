@@ -16,7 +16,7 @@
 
 #include <iostream>
 
-#define TIMER_START 15.0
+#define TIMER_START 60.0
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 
@@ -73,11 +73,11 @@ struct ProgramState {
     double startTime;
     bool diamondColected = false;
     bool dollarCollected = false;
-    glm::vec3 backpackPosition = glm::vec3(0.0f);
-    float backpackScale = 1.0f;
+    //glm::vec3 backpackPosition = glm::vec3(0.0f);
+    //float backpackScale = 1.0f;
     PointLight pointLight;
     ProgramState()
-            : camera(glm::vec3(0.0f, 0.0f, 3.0f)) {}
+            : camera(glm::vec3(-2.32,0.54,5.87)) {}
 
     void SaveToFile(std::string filename);
 
@@ -182,8 +182,10 @@ int main() {
     // build and compile shaders
     // -------------------------
     Shader ourShader("resources/shaders/2.model_lighting.vs", "resources/shaders/2.model_lighting.fs");
+    Shader skyboxShader("resources/shaders/6.1.skybox.vs", "resources/shaders/6.1.skybox.fs");
+    Shader transpShader("resources/shaders/transparentobj.vs", "resources/shaders/transparentobj.fs");
 
-    //TODO ucitati sve modele i pozicionirati ih ispravno
+
     // load models
     // -----------
 
@@ -197,11 +199,8 @@ int main() {
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-    // build and compile shaders
-    // -------------------------
 
-    Shader skyboxShader("resources/shaders/6.1.skybox.vs", "resources/shaders/6.1.skybox.fs");
-    Shader transpShader("resources/shaders/transparentobj.vs", "resources/shaders/transparentobj.fs");
+    // postavljanje koordinata:
 
     // transparent background object:
     float transparentVertices[] = {
@@ -215,9 +214,6 @@ int main() {
             1.0f,  0.5f,  0.0f,  1.0f,  1.0f
     };
 
-
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
 
     float skyboxVertices[] = {
             // positions
@@ -264,6 +260,18 @@ int main() {
             1.0f, -1.0f,  1.0f
     };
 
+    float slikaVertices[] = {
+            // positions          // colors           // texture coords
+            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
+            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
+            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
+            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
+    };
+    unsigned int indices[] = {
+            0,1,3,
+            1,2,3
+    };
+
     // skybox VAO
     unsigned int skyboxVAO, skyboxVBO;
     glGenVertexArrays(1, &skyboxVAO);
@@ -274,7 +282,7 @@ int main() {
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
-    // dollar stash vao
+    // dollar stash VAO
     unsigned int transparentDollarVAO, transparentDollarVBO;
     glGenVertexArrays(1, &transparentDollarVAO);
     glGenBuffers(1, &transparentDollarVBO);
@@ -287,7 +295,7 @@ int main() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    //DIAMOND vao
+    //DIAMOND VAO
     unsigned int transparentDiamondVAO, transparentDiamondVBO;
     glGenVertexArrays(1, &transparentDiamondVAO);
     glGenBuffers(1, &transparentDiamondVBO);
@@ -300,15 +308,31 @@ int main() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glBindVertexArray(0);
 
-    // load textures
-    // -------------
+    // SLIKA EBO
+    unsigned int slikaVBO, slikaVAO, slikaEBO;
+    glGenVertexArrays(1, &slikaVAO);
+    glGenBuffers(1, &slikaVBO);
+    glGenBuffers(1, &slikaEBO);
+    glBindVertexArray(slikaVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, slikaVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(slikaVertices), slikaVertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, slikaEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+
+
+    // ucitavanje tekstura
     stbi_set_flip_vertically_on_load(true);
     unsigned int transparentDollarTexture = loadTexture(FileSystem::getPath("resources/textures/dollars.png").c_str());
     unsigned int transparentDiamondTexture = loadTexture(FileSystem::getPath("resources/textures/diamond.png").c_str());
+    unsigned int slikaTexture = loadTexture(FileSystem::getPath("resources/textures/tmp_slika.png").c_str());
     stbi_set_flip_vertically_on_load(false);
-
-    transpShader.use();
-    transpShader.setInt("texture1", 0);
 
 
     vector<std::string> faces
@@ -323,77 +347,40 @@ int main() {
 
     unsigned int cubemapTexture = loadCubemap(faces);
 
-    // shader configuration
-    // --------------------
+
+//    // tekstura za sliku sa ebo
+//    unsigned int texture;
+//    glGenTextures(1, &texture);
+//    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
+//    // set the texture wrapping parameters
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+//    // set texture filtering parameters
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    // load image, create texture and generate mipmaps
+//    int width, height, nrChannels;
+//    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
+//    unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/tmp_slika.png").c_str(), &width, &height, &nrChannels, 0);
+//    if (data)
+//    {
+//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+//        glGenerateMipmap(GL_TEXTURE_2D);
+//    }
+//    else
+//    {
+//        std::cout << "Failed to load texture" << std::endl;
+//    }
+//    stbi_image_free(data);
+
+    transpShader.use();
+    transpShader.setInt("texture1", 0);
 
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
     // draw in wireframe
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-    // novo odavde:
-
-    // set up vertex data (and buffer(s)) and configure vertex attributes
-    // ------------------------------------------------------------------
-    float vertices[] = {
-            // positions          // colors           // texture coords
-            0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-            -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-            -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left
-    };
-    unsigned int indices[] = {
-            0,1,3,
-            1,2,3 // first triangle
-             // second triangle
-    };
-    unsigned int slikaVBO, slikaVAO, slikaEBO;
-    glGenVertexArrays(1, &slikaVAO);
-    glGenBuffers(1, &slikaVBO);
-    glGenBuffers(1, &slikaEBO);
-    glBindVertexArray(slikaVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, slikaVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, slikaEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
-
-    // load and create a texture
-    // -------------------------
-    unsigned int texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-    // set the texture wrapping parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    // set texture filtering parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    // load image, create texture and generate mipmaps
-    int width, height, nrChannels;
-    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-    unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/tmp_slika.png").c_str(), &width, &height, &nrChannels, 0);
-    if (data)
-    {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        glGenerateMipmap(GL_TEXTURE_2D);
-    }
-    else
-    {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
-    //do ovde
 
 
     // render loop
@@ -422,12 +409,12 @@ int main() {
         pointLight.diffuse = glm::vec3(0.6, 0.6, 0.6);
         pointLight.specular = glm::vec3(1.0, 1.0, 1.0);
 
-        pointLight.constant = 0.5f;
+        pointLight.constant = 0.1f;
         pointLight.linear = 0.03f;
         pointLight.quadratic = 0.032f;
 
         ourShader.use();
-        pointLight.position = glm::vec3(4.0 * cos(currentFrame), 4.0f, 4.0 * sin(currentFrame));
+        pointLight.position = glm::vec3 (1.0, 2.0 * sin(currentFrame), 5.0); //glm::vec3(4.0 * cos(currentFrame), 4.0f, 4.0 * sin(currentFrame));
         ourShader.setVec3("pointLight.position", pointLight.position);
         ourShader.setVec3("pointLight.ambient", pointLight.ambient);
         ourShader.setVec3("pointLight.diffuse", pointLight.diffuse);
@@ -459,27 +446,26 @@ int main() {
 
         // render the loaded model
 
-        /// pomerila lazybag da bude blize kameri, zbog osvetljenja
         //LAZYBAG
-        glm::mat4 model = glm::mat4(1.0f); //staviti z na 16.5f kada se pomeri lazybag, inace na 15.0f
-        model = glm::translate(model,glm::vec3(-2.5f,-3.0f,15.5f) + (float)movingObject.lazybag * glm::vec3(0.0f, 0.0f, 1.5f));
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model,glm::vec3(-2.5f,-1.0f,10.5f) + (float)movingObject.lazybag * glm::vec3(0.0f, 0.0f, 0.7f));
         model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
-        model = glm::rotate(model,glm::radians(65.0f),glm::vec3(0,0,1.0));
-        model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
-        model = glm::scale(model, glm::vec3(0.03f,0.03f,0.03f));    // it's a bit too big for our scene, so scale it down
+        model = glm::rotate(model,glm::radians(80.0f),glm::vec3(0,0,1.0));
+        model = glm::rotate(model,glm::radians(150.0f),glm::vec3(0,1.0,0));
+        model = glm::scale(model, glm::vec3(0.017f,0.017f,0.017f));    // it's a bit too big for our scene, so scale it down
         ourShader.setMat4("model", model);
         ourModelLazyBag.Draw(ourShader);
 
-        //LAPTOP, dobro pozicioniran
+        //LAPTOP
         model = glm::mat4(1.0f);
-        model = glm::translate(model,glm::vec3(13.0f, -5.0f, 18.0f) + (float)movingObject.laptop * glm::vec3(0.0f, 0.0f, 2.0f));
-        model = glm::scale(model, glm::vec3(0.6f));
+        model = glm::translate(model,glm::vec3(8.0f, -3.0f, 13.0f) + (float)movingObject.laptop * glm::vec3(0.0f, 0.0f, 2.0f));
+        model = glm::rotate(model,glm::radians(30.0f),glm::vec3(0.0,1.0,0.0));
+        model = glm::scale(model, glm::vec3(0.5f));
         ourShader.setMat4("model", model);
         ourModelLapTop.Draw(ourShader);
 
-        //NOVOOOOO DANAS:
         //KAKTUS
-        model = glm::mat4(1.0f); //staviti x na 4.0f kada se pomeri saksija, inace na 8.0f
+        model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(6.0f,-5.5f,3.5f) + (float)movingObject.kaktus * glm::vec3(-2.0f, 0.0f, 0.0f));
         //model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
         model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0,0.0));
@@ -496,7 +482,7 @@ int main() {
                                           (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
             view = programState->camera.GetViewMatrix();
             model = glm::mat4(1.0f);
-            model = glm::translate(model, glm::vec3(-3.0f, -10.0f, 27.0f));
+            model = glm::translate(model, glm::vec3(-3.5f, -7.0f, 25.0f));
             model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 
             transpShader.setMat4("model", model);
@@ -508,6 +494,7 @@ int main() {
             glBindTexture(GL_TEXTURE_2D, transparentDollarTexture);
             glDrawArrays(GL_TRIANGLES, 0, 6);
         }
+
         //DIAMOND object
         if(!programState->diamondColected){
             transpShader.use();
@@ -527,10 +514,9 @@ int main() {
             glBindTexture(GL_TEXTURE_2D, transparentDiamondTexture);
             glDrawArrays(GL_TRIANGLES, 0, 6);
         }
-        //novo odavde, za sliku na zidu:
-        // bind Texture
-        glBindTexture(GL_TEXTURE_2D, texture);
-        // render container
+
+        //za sliku na zidu:
+        glBindTexture(GL_TEXTURE_2D, slikaTexture);
         transpShader.use();
         projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
         view = programState->camera.GetViewMatrix();
@@ -544,10 +530,7 @@ int main() {
         transpShader.setMat4("view", view);
         glBindVertexArray(slikaVAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        //novo do ovde
 
-
-        //dodala:
         // draw skybox as last
 
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
@@ -562,8 +545,6 @@ int main() {
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
         glDepthFunc(GL_LESS); // set depth function back to default
-
-        //do ovde
 
         if (programState->ImGuiEnabled)
             DrawImGui(programState);
@@ -659,12 +640,13 @@ void DrawImGui(ProgramState *programState) {
         ImGui::Text("timer: %f sec", time);
 
         /// Ovaj deo nam treba za implementaciju pomeranja objekata
-//        const Camera& c = programState->camera;
-//        ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
-//        ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
-//        ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
+        const Camera& c = programState->camera;
+        ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
+        ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
+        ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
 
 
+        /// GUI za igru:
         if(!programState->gameStart){
             ImGui::Text("Nalazis se u hotelskoj sobi koju zelis da opljackas,\nali ono sto nisi znao je da je ona obezbdjena alarmom\n"
                         "Imas tacno 60 sekundi da pronadjes ono zbog cega si ovde\n\n\n"
@@ -684,7 +666,7 @@ void DrawImGui(ProgramState *programState) {
                 ImGui::Text("Bravo, pronasao si dolare\n");
             }
             if(programState->diamondColected && programState->dollarCollected){
-                ImGui::Text("Misija uspesna!\n Sve si pronasao na vreme\n");
+                ImGui::Text("Misija uspesna!\n Sve si pronasao na vreme\n\nKlikni ESC za izlaz");
             }
         }
 
@@ -715,12 +697,12 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
         else if (movingObject.kaktus == 1)
             movingObject.kaktus = -1;
         // lazybag
-        if ((xpos + 0.01) * (xpos + 0.01) + (ypos + 0.33) * (ypos + 0.33) + (zpos - 0.94) * (zpos - 0.94) < 0.1 && movingObject.lazybag == -1)
+        if ((xpos + 0.06) * (xpos + 0.06) + (ypos + 0.21) * (ypos + 0.21) + (zpos - 0.97) * (zpos - 0.97) < 0.1 && movingObject.lazybag == -1)
             movingObject.lazybag = 1;
         else if (movingObject.lazybag == 1)
             movingObject.lazybag = -1;
         // laptop
-        if ((xpos - 0.79) * (xpos - 0.79) + (ypos + 0.18) * (ypos + 0.18) + (zpos - 0.58) * (zpos - 0.58) < 0.1 && movingObject.laptop == -1)
+        if ((xpos - 0.88) * (xpos - 0.88) + (ypos + 0.20) * (ypos + 0.20) + (zpos - 0.41) * (zpos - 0.41) < 0.1 && movingObject.laptop == -1)
             movingObject.laptop = 1;
         else if (movingObject.laptop == 1)
             movingObject.laptop = -1;
