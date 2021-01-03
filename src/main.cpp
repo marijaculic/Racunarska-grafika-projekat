@@ -639,11 +639,11 @@ void DrawImGui(ProgramState *programState) {
         ImGui::Begin("Money Heist");
         ImGui::Text("timer: %f sec", time);
 
-        /// Ovaj deo nam treba za implementaciju pomeranja objekata
-        const Camera& c = programState->camera;
-        ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
-        ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
-        ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
+        /// Ovaj deo nam treba za implementaciju pomeranja objekata, nije dostupno tokom igre
+//         const Camera& c = programState->camera;
+//         ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
+//         ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
+//         ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
 
 
         /// GUI za igru:
