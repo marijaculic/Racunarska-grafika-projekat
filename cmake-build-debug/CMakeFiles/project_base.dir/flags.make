@@ -6,5 +6,5 @@ CXX_FLAGS = -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -O3 -g   -s
 
 CXX_DEFINES = -DGLFW_DLL -DIMGUI_IMPL_OPENGL_LOADER_GLAD
 
-CXX_INCLUDES = -I/home/lucija/grafika/cmake-build-debug/configuration -I/home/lucija/grafika/include -I/home/lucija/grafika/libs/glad/include -I/home/lucija/grafika/libs/imgui/include 
+CXX_INCLUDES = -I/home/lucija/Documents/projekat/grafika/cmake-build-debug/configuration -I/home/lucija/Documents/projekat/grafika/include -I/home/lucija/Documents/projekat/grafika/libs/glad/include -I/home/lucija/Documents/projekat/grafika/libs/imgui/include 
 

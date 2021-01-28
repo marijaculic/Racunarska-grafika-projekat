@@ -182,13 +182,13 @@ imgui.h
 TargetConditionals.h
 ../libs/imgui/include/TargetConditionals.h
 
-/home/lucija/grafika/src/main.cpp
+/home/lucija/Documents/projekat/grafika/src/main.cpp
 imgui.h
-/home/lucija/grafika/src/imgui.h
+/home/lucija/Documents/projekat/grafika/src/imgui.h
 imgui_impl_glfw.h
-/home/lucija/grafika/src/imgui_impl_glfw.h
+/home/lucija/Documents/projekat/grafika/src/imgui_impl_glfw.h
 imgui_impl_opengl3.h
-/home/lucija/grafika/src/imgui_impl_opengl3.h
+/home/lucija/Documents/projekat/grafika/src/imgui_impl_opengl3.h
 glad/glad.h
 -
 GLFW/glfw3.h

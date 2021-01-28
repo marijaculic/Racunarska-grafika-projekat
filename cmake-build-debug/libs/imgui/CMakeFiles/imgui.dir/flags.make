@@ -6,5 +6,5 @@ CXX_FLAGS = -Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -O3 -g   -s
 
 CXX_DEFINES = -DIMGUI_IMPL_OPENGL_LOADER_GLAD
 
-CXX_INCLUDES = -I/home/lucija/grafika/libs/imgui/include -I/home/lucija/grafika/libs/glad/include 
+CXX_INCLUDES = -I/home/lucija/Documents/projekat/grafika/libs/imgui/include -I/home/lucija/Documents/projekat/grafika/libs/glad/include 
 

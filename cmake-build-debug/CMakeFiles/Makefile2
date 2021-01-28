@@ -64,10 +64,10 @@ RM = /snap/clion/138/bin/cmake/linux/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/lucija/grafika
+CMAKE_SOURCE_DIR = /home/lucija/Documents/projekat/grafika
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/lucija/grafika/cmake-build-debug
+CMAKE_BINARY_DIR = /home/lucija/Documents/projekat/grafika/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -139,14 +139,14 @@ CMakeFiles/project_base.dir/all: libs/glad/CMakeFiles/glad.dir/all
 CMakeFiles/project_base.dir/all: libs/imgui/CMakeFiles/imgui.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/project_base.dir/build.make CMakeFiles/project_base.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/project_base.dir/build.make CMakeFiles/project_base.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/grafika/cmake-build-debug/CMakeFiles --progress-num=13,14 "Built target project_base"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles --progress-num=13,14 "Built target project_base"
 .PHONY : CMakeFiles/project_base.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/project_base.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 14
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 14
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/project_base.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/project_base.dir/rule
 
 # Convenience name for target.
@@ -166,14 +166,14 @@ CMakeFiles/project_base.dir/clean:
 CMakeFiles/STB_IMAGE.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/STB_IMAGE.dir/build.make CMakeFiles/STB_IMAGE.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/STB_IMAGE.dir/build.make CMakeFiles/STB_IMAGE.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/grafika/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target STB_IMAGE"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target STB_IMAGE"
 .PHONY : CMakeFiles/STB_IMAGE.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/STB_IMAGE.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/STB_IMAGE.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/STB_IMAGE.dir/rule
 
 # Convenience name for target.
@@ -193,14 +193,14 @@ CMakeFiles/STB_IMAGE.dir/clean:
 libs/glad/CMakeFiles/glad.dir/all:
 	$(MAKE) $(MAKESILENT) -f libs/glad/CMakeFiles/glad.dir/build.make libs/glad/CMakeFiles/glad.dir/depend
 	$(MAKE) $(MAKESILENT) -f libs/glad/CMakeFiles/glad.dir/build.make libs/glad/CMakeFiles/glad.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/grafika/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target glad"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles --progress-num=3,4 "Built target glad"
 .PHONY : libs/glad/CMakeFiles/glad.dir/all
 
 # Build rule for subdir invocation for target.
 libs/glad/CMakeFiles/glad.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/glad/CMakeFiles/glad.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 0
 .PHONY : libs/glad/CMakeFiles/glad.dir/rule
 
 # Convenience name for target.
@@ -220,14 +220,14 @@ libs/glad/CMakeFiles/glad.dir/clean:
 libs/imgui/CMakeFiles/imgui.dir/all: libs/glad/CMakeFiles/glad.dir/all
 	$(MAKE) $(MAKESILENT) -f libs/imgui/CMakeFiles/imgui.dir/build.make libs/imgui/CMakeFiles/imgui.dir/depend
 	$(MAKE) $(MAKESILENT) -f libs/imgui/CMakeFiles/imgui.dir/build.make libs/imgui/CMakeFiles/imgui.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/grafika/cmake-build-debug/CMakeFiles --progress-num=5,6,7,8,9,10,11,12 "Built target imgui"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles --progress-num=5,6,7,8,9,10,11,12 "Built target imgui"
 .PHONY : libs/imgui/CMakeFiles/imgui.dir/all
 
 # Build rule for subdir invocation for target.
 libs/imgui/CMakeFiles/imgui.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 10
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 libs/imgui/CMakeFiles/imgui.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/grafika/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/lucija/Documents/projekat/grafika/cmake-build-debug/CMakeFiles 0
 .PHONY : libs/imgui/CMakeFiles/imgui.dir/rule
 
 # Convenience name for target.

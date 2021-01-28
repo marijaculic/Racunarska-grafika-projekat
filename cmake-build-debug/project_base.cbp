@@ -5,41 +5,41 @@
 		<Option title="project_base"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\usr\;CMake Files\..\..\..\usr\lib\;CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\;CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-4.1\;CMake Files\configuration\;CMake Files\libs\;CMake Files\libs\glad\;CMake Files\libs\imgui\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\;CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-4.1\;CMake Files\configuration\;CMake Files\libs\;CMake Files\libs\glad\;CMake Files\libs\imgui\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="project_base">
-				<Option output="/home/lucija/grafika/project_base" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/project_base" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DGLFW_DLL"/>
 					<Add option="-DIMGUI_IMPL_OPENGL_LOADER_GLAD"/>
-					<Add directory="/home/lucija/grafika/cmake-build-debug/configuration"/>
-					<Add directory="/home/lucija/grafika/include"/>
-					<Add directory="/home/lucija/grafika/libs/glad/include"/>
-					<Add directory="/home/lucija/grafika/libs/imgui/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/cmake-build-debug/configuration"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/glad/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/imgui/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -50,25 +50,25 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 project_base"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 project_base"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="project_base/fast">
-				<Option output="/home/lucija/grafika/project_base" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/project_base" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DGLFW_DLL"/>
 					<Add option="-DIMGUI_IMPL_OPENGL_LOADER_GLAD"/>
-					<Add directory="/home/lucija/grafika/cmake-build-debug/configuration"/>
-					<Add directory="/home/lucija/grafika/include"/>
-					<Add directory="/home/lucija/grafika/libs/glad/include"/>
-					<Add directory="/home/lucija/grafika/libs/imgui/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/cmake-build-debug/configuration"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/glad/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/imgui/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -79,31 +79,31 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 project_base/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 project_base/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="STB_IMAGE">
-				<Option output="/home/lucija/grafika/cmake-build-debug/libSTB_IMAGE.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libSTB_IMAGE.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/lucija/grafika/cmake-build-debug/configuration"/>
-					<Add directory="/home/lucija/grafika/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/cmake-build-debug/configuration"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -114,21 +114,21 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 STB_IMAGE"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 STB_IMAGE"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="STB_IMAGE/fast">
-				<Option output="/home/lucija/grafika/cmake-build-debug/libSTB_IMAGE.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libSTB_IMAGE.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/lucija/grafika/cmake-build-debug/configuration"/>
-					<Add directory="/home/lucija/grafika/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/cmake-build-debug/configuration"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -139,20 +139,20 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 STB_IMAGE/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 STB_IMAGE/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="glad">
-				<Option output="/home/lucija/grafika/cmake-build-debug/libs/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug/libs/glad"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/lucija/grafika/libs/glad/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/glad/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -163,20 +163,20 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 glad"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 glad"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="glad/fast">
-				<Option output="/home/lucija/grafika/cmake-build-debug/libs/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug/libs/glad"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/libglad.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/lucija/grafika/libs/glad/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/glad/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -187,22 +187,22 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 glad/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 glad/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/glad/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="imgui">
-				<Option output="/home/lucija/grafika/cmake-build-debug/libs/imgui/libimgui.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug/libs/imgui"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/libimgui.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DIMGUI_IMPL_OPENGL_LOADER_GLAD"/>
-					<Add directory="/home/lucija/grafika/libs/imgui/include"/>
-					<Add directory="/home/lucija/grafika/libs/glad/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/imgui/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/glad/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -213,22 +213,22 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 imgui"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 imgui"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="imgui/fast">
-				<Option output="/home/lucija/grafika/cmake-build-debug/libs/imgui/libimgui.a" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/lucija/grafika/cmake-build-debug/libs/imgui"/>
+				<Option output="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/libimgui.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui"/>
 				<Option object_output="./"/>
 				<Option type="2"/>
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add option="-DIMGUI_IMPL_OPENGL_LOADER_GLAD"/>
-					<Add directory="/home/lucija/grafika/libs/imgui/include"/>
-					<Add directory="/home/lucija/grafika/libs/glad/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/imgui/include"/>
+					<Add directory="/home/lucija/Documents/projekat/grafika/libs/glad/include"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
 					<Add directory="/usr/include/c++/7/backward"/>
@@ -239,98 +239,98 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 imgui/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 imgui/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/lucija/Documents/projekat/grafika/cmake-build-debug/libs/imgui/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/lucija/grafika/libs/glad/include/glad/glad.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/glad/include/glad/glad.h">
 			<Option target="glad"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/glad/src/glad.c">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/glad/src/glad.c">
 			<Option target="glad"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imconfig.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imconfig.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imgui.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imgui.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imgui_impl_glfw.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imgui_impl_glfw.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imgui_impl_opengl3.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imgui_impl_opengl3.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imgui_internal.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imgui_internal.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imstb_rectpack.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imstb_rectpack.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imstb_textedit.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imstb_textedit.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/include/imstb_truetype.h">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/include/imstb_truetype.h">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui_demo.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui_demo.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui_draw.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui_draw.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui_impl_glfw.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui_impl_glfw.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui_impl_opengl3.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui_impl_opengl3.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui_tables.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui_tables.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/src/imgui_widgets.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/src/imgui_widgets.cpp">
 			<Option target="imgui"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/stb_image.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/stb_image.cpp">
 			<Option target="STB_IMAGE"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/src/main.cpp">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/src/main.cpp">
 			<Option target="project_base"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/CMakeLists.txt">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Config.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		<Unit filename="/home/lucija/Documents/projekat/grafika/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3ConfigVersion.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		<Unit filename="/home/lucija/Documents/projekat/grafika/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3ConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets-none.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		<Unit filename="/home/lucija/Documents/projekat/grafika/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets-none.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
+		<Unit filename="/home/lucija/Documents/projekat/grafika/../../../../../usr/lib/x86_64-linux-gnu/cmake/glfw3/glfw3Targets.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\glfw3\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/../../../usr/lib/x86_64-linux-gnu/cmake/assimp-4.1/assimp-config-version.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-4.1\"/>
+		<Unit filename="/home/lucija/Documents/projekat/grafika/../../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-4.1/assimp-config-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-4.1\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/../../../usr/lib/x86_64-linux-gnu/cmake/assimp-4.1/assimp-config.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-4.1\"/>
+		<Unit filename="/home/lucija/Documents/projekat/grafika/../../../../../usr/lib/x86_64-linux-gnu/cmake/assimp-4.1/assimp-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\assimp-4.1\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/configuration/root_directory.h.in">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/configuration/root_directory.h.in">
 			<Option virtualFolder="CMake Files\configuration\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/glad/CMakeLists.txt">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/glad/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\libs\glad\"/>
 		</Unit>
-		<Unit filename="/home/lucija/grafika/libs/imgui/CMakeLists.txt">
+		<Unit filename="/home/lucija/Documents/projekat/grafika/libs/imgui/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\libs\imgui\"/>
 		</Unit>
 	</Project>

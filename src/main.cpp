@@ -28,7 +28,6 @@ void processInput(GLFWwindow *window);
 
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
 
-//dodala:
 unsigned int loadTexture(const char *path);
 unsigned int loadCubemap(vector<std::string> faces);
 
@@ -69,7 +68,6 @@ struct ProgramState {
     Camera camera;
     bool CameraMouseMovementUpdateEnabled = true;
     bool gameStart = false;
-    bool gameSuccess = false;
     double startTime;
     bool diamondColected = false;
     bool dollarCollected = false;
@@ -121,7 +119,6 @@ void DrawImGui(ProgramState *programState);
 
 int main() {
     // glfw: initialize and configure
-    // ------------------------------
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -132,7 +129,6 @@ int main() {
 #endif
 
     // glfw window creation
-    // --------------------
     GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
     if (window == NULL) {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -148,16 +144,10 @@ int main() {
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // glad: load all OpenGL function pointers
-    // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
-
-    //TODO: razvrstati modele za koje je potrebno ugasiti/upaliti flip flag
-
-    // tell stb_image.h to flip loaded texture's on the y-axis (before loading model).
-    //stbi_set_flip_vertically_on_load(true);
 
     programState = new ProgramState;
     programState->LoadFromFile("resources/program_state.txt");
@@ -170,39 +160,29 @@ int main() {
     ImGuiIO &io = ImGui::GetIO();
     (void) io;
 
-
-
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330 core");
 
     // configure global opengl state
-    // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
     // build and compile shaders
-    // -------------------------
     Shader ourShader("resources/shaders/2.model_lighting.vs", "resources/shaders/2.model_lighting.fs");
     Shader skyboxShader("resources/shaders/6.1.skybox.vs", "resources/shaders/6.1.skybox.fs");
     Shader transpShader("resources/shaders/transparentobj.vs", "resources/shaders/transparentobj.fs");
 
-
     // load models
-    // -----------
-
     Model ourModelLazyBag("resources/objects/lazybag/10216_Bean_Bag_Chair_v2_max2008_it2.obj");
     Model ourModelLapTop("resources/objects/laptop/Laptop_High-Polay_HP_BI_2_obj.obj");
     Model ourModelKaktus("resources/objects/kaktus/kwiatek.obj");
     ourModelLazyBag.SetShaderTextureNamePrefix("material.");
 
-    //dodala:
-    // configure global opengl state
-    // -----------------------------
+
     glEnable(GL_DEPTH_TEST);
 
+    // setting coordinates:
 
-    // postavljanje koordinata:
-
-    // transparent background object:
+    // transparent background square
     float transparentVertices[] = {
             // positions         // texture coordinates (non-swapped because stbi flips picture when loading)
             0.0f,  0.5f,  0.0f,  0.0f,  1.0f,
@@ -215,6 +195,7 @@ int main() {
     };
 
 
+    // skybox
     float skyboxVertices[] = {
             // positions
             -1.0f,  1.0f, -1.0f,
@@ -327,11 +308,13 @@ int main() {
     glEnableVertexAttribArray(2);
 
 
-    // ucitavanje tekstura
+    // texture loading
     stbi_set_flip_vertically_on_load(true);
+
     unsigned int transparentDollarTexture = loadTexture(FileSystem::getPath("resources/textures/dollars.png").c_str());
     unsigned int transparentDiamondTexture = loadTexture(FileSystem::getPath("resources/textures/diamond.png").c_str());
     unsigned int slikaTexture = loadTexture(FileSystem::getPath("resources/textures/tmp_slika.png").c_str());
+
     stbi_set_flip_vertically_on_load(false);
 
 
@@ -347,62 +330,28 @@ int main() {
 
     unsigned int cubemapTexture = loadCubemap(faces);
 
-
-//    // tekstura za sliku sa ebo
-//    unsigned int texture;
-//    glGenTextures(1, &texture);
-//    glBindTexture(GL_TEXTURE_2D, texture); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-//    // set the texture wrapping parameters
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-//    // set texture filtering parameters
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//    // load image, create texture and generate mipmaps
-//    int width, height, nrChannels;
-//    // The FileSystem::getPath(...) is part of the GitHub repository so we can find files on any IDE/platform; replace it with your own image path.
-//    unsigned char *data = stbi_load(FileSystem::getPath("resources/textures/tmp_slika.png").c_str(), &width, &height, &nrChannels, 0);
-//    if (data)
-//    {
-//        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-//        glGenerateMipmap(GL_TEXTURE_2D);
-//    }
-//    else
-//    {
-//        std::cout << "Failed to load texture" << std::endl;
-//    }
-//    stbi_image_free(data);
-
     transpShader.use();
     transpShader.setInt("texture1", 0);
 
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
-    // draw in wireframe
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-
     // render loop
-    // -----------
     while (!glfwWindowShouldClose(window)) {
         // per-frame time logic
-        // --------------------
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         // input
-        // -----
         processInput(window);
 
 
         // render
-        // ------
         glClearColor(programState->clearColor.r, programState->clearColor.g, programState->clearColor.b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // point light
+        // point lights
         PointLight& pointLight = programState->pointLight;
         pointLight.position = glm::vec3(4.0f, 4.0, 0.0);
         pointLight.ambient = glm::vec3(0.1, 0.1, 0.1);
@@ -414,7 +363,8 @@ int main() {
         pointLight.quadratic = 0.032f;
 
         ourShader.use();
-        pointLight.position = glm::vec3 (1.0, 2.0 * sin(currentFrame), 5.0); //glm::vec3(4.0 * cos(currentFrame), 4.0f, 4.0 * sin(currentFrame));
+        // pointLight1
+        pointLight.position = glm::vec3(7.5f, 1.0f, 6.5f);
         ourShader.setVec3("pointLight.position", pointLight.position);
         ourShader.setVec3("pointLight.ambient", pointLight.ambient);
         ourShader.setVec3("pointLight.diffuse", pointLight.diffuse);
@@ -422,6 +372,18 @@ int main() {
         ourShader.setFloat("pointLight.constant", pointLight.constant);
         ourShader.setFloat("pointLight.linear", pointLight.linear);
         ourShader.setFloat("pointLight.quadratic", pointLight.quadratic);
+        ourShader.setVec3("viewPosition", programState->camera.Position);
+        ourShader.setFloat("material.shininess", 32.0f);
+
+        // pointLight2
+        pointLight.position = glm::vec3(5.0f, 0.7f, 16.5f);
+        ourShader.setVec3("pointLight1.position", pointLight.position);
+        ourShader.setVec3("pointLight1.ambient", pointLight.ambient);
+        ourShader.setVec3("pointLight1.diffuse", pointLight.diffuse);
+        ourShader.setVec3("pointLight1.specular", pointLight.specular);
+        ourShader.setFloat("pointLight1.constant", pointLight.constant);
+        ourShader.setFloat("pointLight1.linear", pointLight.linear);
+        ourShader.setFloat("pointLight1.quadratic", pointLight.quadratic);
         ourShader.setVec3("viewPosition", programState->camera.Position);
         ourShader.setFloat("material.shininess", 32.0f);
 
@@ -438,13 +400,12 @@ int main() {
         ourShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
 
 
-        glm::mat4 projection = glm::perspective(glm::radians(programState->camera.Zoom),
-                                                (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(glm::radians(programState->camera.Zoom), (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
         glm::mat4 view = programState->camera.GetViewMatrix();
         ourShader.setMat4("projection", projection);
         ourShader.setMat4("view", view);
 
-        // render the loaded model
+        // rendering loaded models
 
         //LAZYBAG
         glm::mat4 model = glm::mat4(1.0f);
@@ -467,9 +428,7 @@ int main() {
         //KAKTUS
         model = glm::mat4(1.0f);
         model = glm::translate(model, glm::vec3(6.0f,-5.5f,3.5f) + (float)movingObject.kaktus * glm::vec3(-2.0f, 0.0f, 0.0f));
-        //model = glm::rotate(model,glm::radians(50.0f),glm::vec3(1.0,0,0));
         model = glm::rotate(model,glm::radians(-90.0f),glm::vec3(1.0,0,0.0));
-        //model = glm::rotate(model,glm::radians(160.0f),glm::vec3(0,1.0,0));
         model = glm::scale(model, glm::vec3(0.065f,0.065f,0.065f));
         ourShader.setMat4("model", model);
         ourModelKaktus.Draw(ourShader);
@@ -515,7 +474,7 @@ int main() {
             glDrawArrays(GL_TRIANGLES, 0, 6);
         }
 
-        //za sliku na zidu:
+        // picture
         glBindTexture(GL_TEXTURE_2D, slikaTexture);
         transpShader.use();
         projection = glm::perspective(glm::radians(programState->camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -531,13 +490,13 @@ int main() {
         glBindVertexArray(slikaVAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // draw skybox as last
-
+        // drawing skybox as last
         glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
         skyboxShader.use();
         view = glm::mat4(glm::mat3(programState->camera.GetViewMatrix())); // remove translation from the view matrix
         skyboxShader.setMat4("view", view);
         skyboxShader.setMat4("projection", projection);
+
         // skybox cube
         glBindVertexArray(skyboxVAO);
         glActiveTexture(GL_TEXTURE0);
@@ -550,7 +509,6 @@ int main() {
             DrawImGui(programState);
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-        // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -561,7 +519,6 @@ int main() {
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
     // glfw: terminate, clearing all previously allocated GLFW resources.
-    // ------------------------------------------------------------------
 
     glDeleteVertexArrays(1, &slikaVAO);
     glDeleteBuffers(1, &slikaVBO);
@@ -633,20 +590,21 @@ void DrawImGui(ProgramState *programState) {
 
     {
         double time = TIMER_START;
-        if(programState->gameStart && !programState->diamondColected && !programState->dollarCollected) {
+        if(programState->gameStart && !(programState->diamondColected && programState->dollarCollected)) {
             time = max(TIMER_START - glfwGetTime() + programState->startTime, 0.0);
         }
         ImGui::Begin("Money Heist");
         ImGui::Text("timer: %f sec", time);
 
-        /// Ovaj deo nam treba za implementaciju pomeranja objekata, nije dostupno tokom igre
-//         const Camera& c = programState->camera;
-//         ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
-//         ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
-//         ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
+        /// Ovaj deo nam treba za implementaciju pomeranja objekata, nije dostupan tokom igre
+//
+//        const Camera& c = programState->camera;
+//        ImGui::Text("Camera position: (%f, %f, %f)", c.Position.x, c.Position.y, c.Position.z);
+//        ImGui::Text("(Yaw, Pitch): (%f, %f)", c.Yaw, c.Pitch);
+//        ImGui::Text("Camera front: (%f, %f, %f)", c.Front.x, c.Front.y, c.Front.z);
 
 
-        /// GUI za igru:
+        // GUI:
         if(!programState->gameStart){
             ImGui::Text("Nalazis se u hotelskoj sobi koju zelis da opljackas,\nali ono sto nisi znao je da je ona obezbdjena alarmom\n"
                         "Imas tacno 60 sekundi da pronadjes ono zbog cega si ovde\n\n\n"
